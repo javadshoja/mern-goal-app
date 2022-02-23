@@ -5,7 +5,8 @@
 	"main": "server.ts",
 	"scripts": {
 		"start": "ts-node backend/server",
-		"server": "nodemon backend/server"
+		"server": "nodemon backend/server",
+		"dev": "npm run server"
 	},
 	"keywords": [
 		"mern",
@@ -25,7 +26,10 @@
 		"typescript": "^4.5.5"
 	},
 	"dependencies": {
+		"colorts": "^0.1.63",
 		"dotenv": "^16.0.0",
-		"express": "^4.17.3"
+		"express": "^4.17.3",
+		"express-async-handler": "^1.2.0",
+		"mongoose": "^6.2.2"
 	}
 }
