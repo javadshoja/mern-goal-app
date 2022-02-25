@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler'
-
 import type { Request, Response } from 'express'
+import { Goal } from '../models'
 
 /* 
   @desc     Get goals
@@ -8,7 +8,9 @@ import type { Request, Response } from 'express'
   @access   Private
 */
 export const getGoals = asyncHandler(async (req: Request, res: Response) => {
-	res.json({ message: 'get goals' })
+	const goals = await Goal.find()
+
+	res.json(goals)
 })
 
 /* 
@@ -17,13 +19,18 @@ export const getGoals = asyncHandler(async (req: Request, res: Response) => {
   @access   Private
 */
 export const createGoal = asyncHandler(async (req: Request, res: Response) => {
-	const { body } = req
-	console.log(body)
-	if (!req.body.text) {
+	const { text } = req.body
+
+	if (!text) {
 		res.status(400)
 		throw new Error('Please add a text filed')
 	}
-	res.json({ message: 'create goal' })
+
+	const goal = await Goal.create({
+		text,
+	})
+
+	res.json(goal)
 })
 
 /* 
@@ -33,7 +40,19 @@ export const createGoal = asyncHandler(async (req: Request, res: Response) => {
 */
 export const updateGoal = asyncHandler(async (req: Request, res: Response) => {
 	const { goalId } = req.params
-	res.json({ message: `update goal ${goalId}` })
+	console.log(goalId)
+	const goal = await Goal.findById(goalId)
+
+	if (!goal) {
+		res.status(400)
+		throw new Error('Goal not found')
+	}
+
+	const updatedGoal = await Goal.findByIdAndUpdate(goalId, req.body, {
+		new: true,
+	})
+
+	res.json(updatedGoal)
 })
 
 /* 
@@ -43,5 +62,15 @@ export const updateGoal = asyncHandler(async (req: Request, res: Response) => {
 */
 export const deleteGoal = asyncHandler(async (req: Request, res: Response) => {
 	const { goalId } = req.params
-	res.json({ message: `delete goal ${goalId}` })
+
+	const goal = Goal.findById(goalId)
+
+	if (!goal) {
+		res.status(400)
+		throw new Error('Goal not find')
+	}
+
+	await goal.remove()
+
+	res.json({ id: goalId })
 })

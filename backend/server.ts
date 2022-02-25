@@ -2,9 +2,12 @@ import 'dotenv/config'
 import 'colorts/lib/string'
 import express from 'express'
 import goal from './routes/goal'
+import { connectDB } from './config'
 import { errorHandler } from './middleware'
 
 const PORT = process.env.PORT || 5000
+
+connectDB()
 
 const app = express()
 
