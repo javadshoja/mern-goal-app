@@ -2,6 +2,7 @@ import 'dotenv/config'
 import 'colorts/lib/string'
 import express from 'express'
 import goal from './routes/goal'
+import user from './routes/user'
 import { connectDB } from './config'
 import { errorHandler } from './middleware'
 
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/goal', goal)
+app.use('/api/user', user)
 
 app.use(errorHandler)
 
