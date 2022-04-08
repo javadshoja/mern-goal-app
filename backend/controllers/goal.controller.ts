@@ -13,7 +13,7 @@ export const getGoals = asyncHandler(
 		const goals = await Goal.find({ user: req.user.id })
 
 		res.json(goals)
-	},
+	}
 )
 
 /* 
@@ -32,11 +32,11 @@ export const createGoal = asyncHandler(
 
 		const goal = await Goal.create({
 			text,
-			user: req.user.id,
+			user: req.user.id
 		})
 
 		res.json(goal)
-	},
+	}
 )
 
 /* 
@@ -47,6 +47,7 @@ export const createGoal = asyncHandler(
 export const updateGoal = asyncHandler(
 	async (req: IuserRequest, res: Response) => {
 		const { goalId } = req.params
+		const { user } = req
 
 		const goal = await Goal.findById(goalId)
 
@@ -54,8 +55,6 @@ export const updateGoal = asyncHandler(
 			res.status(400)
 			throw new Error('Goal not found')
 		}
-
-		const user = await User.findById(req.user.id)
 
 		// Check for user
 		if (!user) {
@@ -70,11 +69,11 @@ export const updateGoal = asyncHandler(
 		}
 
 		const updatedGoal = await Goal.findByIdAndUpdate(goalId, req.body, {
-			new: true,
+			new: true
 		})
 
 		res.json(updatedGoal)
-	},
+	}
 )
 
 /* 
@@ -85,6 +84,7 @@ export const updateGoal = asyncHandler(
 export const deleteGoal = asyncHandler(
 	async (req: IuserRequest, res: Response) => {
 		const { goalId } = req.params
+		const { user } = req
 
 		const goal = await Goal.findById(goalId)
 
@@ -92,8 +92,6 @@ export const deleteGoal = asyncHandler(
 			res.status(400)
 			throw new Error('Goal not find')
 		}
-
-		const user = await User.findById(req.user.id)
 
 		// Check for user
 		if (!user) {
@@ -110,5 +108,5 @@ export const deleteGoal = asyncHandler(
 		await goal.remove()
 
 		res.json({ id: goalId })
-	},
+	}
 )

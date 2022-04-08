@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(cors({ origin: process.env.ENDPOINT || 'http://localhost:3000' }))
 
-app.use('/api/goal', goal)
+app.use('/api/goals', goal)
 app.use('/api/user', user)
 
 app.use(errorHandler)

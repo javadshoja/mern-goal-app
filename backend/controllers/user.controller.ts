@@ -6,9 +6,9 @@ import { User } from '../models'
 import type { IuserRequest } from '../middleware'
 
 // Generate JWT
-const generateToken = (id) => {
+const generateToken = id => {
 	return sign({ id }, process.env.JWT_SECRET, {
-		expiresIn: '14d',
+		expiresIn: '14d'
 	})
 }
 
@@ -28,7 +28,7 @@ export const registerUser = asyncHandler(
 
 		// Check user exists
 		const userExist = await User.findOne({
-			email,
+			email
 		})
 
 		if (userExist) {
@@ -44,7 +44,7 @@ export const registerUser = asyncHandler(
 		const user = await User.create({
 			name,
 			email,
-			password: hashedPassword,
+			password: hashedPassword
 		})
 
 		if (user) {
@@ -52,13 +52,13 @@ export const registerUser = asyncHandler(
 				_id: user.id,
 				name: user.name,
 				email: user.email,
-				token: generateToken(user.id),
+				token: generateToken(user.id)
 			})
 		} else {
 			res.status(400)
 			throw new Error('Invalid user data')
 		}
-	},
+	}
 )
 
 /* 
@@ -76,7 +76,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
 			_id: user.id,
 			name: user.name,
 			email: user.email,
-			token: generateToken(user.id),
+			token: generateToken(user.id)
 		})
 	} else {
 		res.status(400)
@@ -90,9 +90,5 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   @access   Private
 */
 export const getMe = asyncHandler(async (req: IuserRequest, res: Response) => {
-	const { id } = req.user
-
-	const { _id, name, email } = await User.findById(id)
-
-	res.json({ id: _id, name, email })
+	res.json(req.user)
 })
