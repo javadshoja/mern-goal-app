@@ -1,5 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+
+import { RootState } from '../app/store'
 import { Header, Form, Group, Input, BtnBlock } from '../components/styles'
+import { login, reset } from '../features/user/userSlice'
+import Spinner from '../components/Spinner'
 
 function Login() {
 	const [formData, setFormData] = useState({
@@ -7,7 +14,28 @@ function Login() {
 		password: ''
 	})
 
+	const router = useRouter()
+	const dispatch = useDispatch()
+
 	const { email, password } = formData
+
+	const user = useSelector((state: RootState) => state.user.user)
+	const isError = useSelector((state: RootState) => state.user.isError)
+	const isSuccess = useSelector((state: RootState) => state.user.isSuccess)
+	const isLoading = useSelector((state: RootState) => state.user.isLoading)
+	const message = String(useSelector((state: RootState) => state.user.message))
+
+	useEffect(() => {
+		if (isError) {
+			toast.error(message)
+		}
+
+		if (isSuccess || user) {
+			router.push('/')
+		}
+
+		dispatch(reset())
+	}, [user, isError, isSuccess, message, router, dispatch])
 
 	const onChange = (e: any) => {
 		setFormData(prevState => ({
@@ -17,6 +45,16 @@ function Login() {
 	}
 	const onSubmit = (e: any) => {
 		e.preventDefault()
+
+		const userData = {
+			email,
+			password
+		}
+		dispatch(login(userData))
+	}
+
+	if (isLoading) {
+		return <Spinner />
 	}
 
 	return (
