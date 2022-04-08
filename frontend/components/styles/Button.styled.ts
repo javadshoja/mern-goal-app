@@ -7,7 +7,7 @@ const Button = styled.button`
 	background: #2b365a;
 	color: #fff;
 	font-size: 16px;
-	font-weight: 700;
+
 	cursor: pointer;
 	text-align: center;
 	appearance: button;
@@ -22,6 +22,7 @@ const Button = styled.button`
 export default Button
 
 export const BtnBlock = styled(Button)`
+	font-weight: 700;
 	width: 100%;
 	margin-bottom: 20px;
 `
