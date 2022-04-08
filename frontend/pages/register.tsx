@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+import { RootState } from '../app/store'
+import { reset, register } from '../features/user/userSlice'
 import { Header, Form, Group, Input, BtnBlock } from '../components/styles'
+import Spinner from '../components/Spinner'
 
 function Register() {
 	const [formData, setFormData] = useState({
@@ -9,7 +15,28 @@ function Register() {
 		password2: ''
 	})
 
+	const router = useRouter()
+	const dispatch = useDispatch()
+
 	const { name, email, password, password2 } = formData
+
+	const user = useSelector((state: RootState) => state.user.user)
+	const isError = useSelector((state: RootState) => state.user.isError)
+	const isSuccess = useSelector((state: RootState) => state.user.isSuccess)
+	const isLoading = useSelector((state: RootState) => state.user.isLoading)
+	const message = String(useSelector((state: RootState) => state.user.message))
+
+	useEffect(() => {
+		if (isError) {
+			toast.error(message)
+		}
+
+		if (isSuccess || user) {
+			router.push('/')
+		}
+
+		dispatch(reset())
+	}, [user, isError, isSuccess, message, router, dispatch])
 
 	const onChange = (e: any) => {
 		setFormData(prevState => ({
@@ -17,8 +44,23 @@ function Register() {
 			[e.target.name]: e.target.value
 		}))
 	}
+
 	const onSubmit = (e: any) => {
 		e.preventDefault()
+		if (password !== password2) {
+			toast.error('Passwords do not match')
+		} else {
+			const userData = {
+				name,
+				email,
+				password
+			}
+			dispatch(register(userData))
+		}
+	}
+
+	if (isLoading) {
+		return <Spinner />
 	}
 
 	return (
