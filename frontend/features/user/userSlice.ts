@@ -5,6 +5,7 @@ interface User {
 	id: string
 	name: string
 	email: string
+	token: string
 }
 
 interface UserState {
@@ -18,7 +19,8 @@ interface UserState {
 let user
 
 if (typeof window !== 'undefined') {
-	user = localStorage.getItem('user')
+	const localData = localStorage.getItem('user') as string
+	user = JSON.parse(localData)
 }
 
 const initialState: UserState = {
