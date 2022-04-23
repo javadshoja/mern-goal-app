@@ -23,7 +23,9 @@ function Header() {
 	return (
 		<Nav>
 			<Logo>
-				<Link href='/'>GoalSetter 🎯</Link>
+				<Link href='/' passHref>
+					GoalSetter 🎯
+				</Link>
 			</Logo>
 			<Items>
 				{user ? (
@@ -37,14 +39,14 @@ function Header() {
 				) : (
 					<>
 						<Item>
-							<Link href='/login'>
+							<Link href='/login' passHref>
 								<NavLink>
 									<HiOutlineLogin /> Login
 								</NavLink>
 							</Link>
 						</Item>
 						<Item>
-							<Link href='/register'>
+							<Link href='/register' passHref>
 								<NavLink>
 									<HiOutlineUser /> Register
 								</NavLink>
