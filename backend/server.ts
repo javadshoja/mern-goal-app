@@ -1,5 +1,4 @@
 import 'dotenv/config'
-import 'colorts/lib/string'
 import path from 'path'
 import express from 'express'
 import cors from 'cors'
@@ -24,11 +23,11 @@ app.use('/api/user', user)
 
 // Serve backend
 if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, '../frontend/out')))
+	app.use(express.static(path.join(__dirname, '../../frontend/out')))
 
 	app.get('*', (req, res) => {
 		res.sendFile(
-			path.resolve(__dirname, '../', 'frontend', 'out', 'index.html')
+			path.resolve(__dirname, '../../', 'frontend', 'out', 'index.html')
 		)
 	})
 }
@@ -36,5 +35,5 @@ if (process.env.NODE_ENV === 'production') {
 app.use(errorHandler)
 
 app.listen(PORT, () => {
-	console.log(`🚀 Server running on http://localhost:${PORT}`.cyan.bold)
+	console.log(`🚀 Server running on http://localhost:${PORT}`)
 })

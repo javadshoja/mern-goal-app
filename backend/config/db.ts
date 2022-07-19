@@ -6,7 +6,7 @@ const connectDB = async () => {
 	try {
 		const conn = await mongoose.connect(MONGO_URI)
 
-		console.log(`🥭 MangoDB connected: ${conn.connection.host}`.yellow.bold)
+		console.log(`🥭 MangoDB connected: ${conn.connection.host}`)
 	} catch (error) {
 		console.log(error)
 		process.exit(1)
