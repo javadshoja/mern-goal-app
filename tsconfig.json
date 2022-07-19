@@ -3,6 +3,8 @@
 		"module": "commonjs",
 		"target": "es6",
 		"rootDir": "./",
+		"outDir": "./dist",
 		"esModuleInterop": true
-	}
+	},
+	"exclude": ["frontend", "node_modules"]
 }
