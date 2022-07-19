@@ -1,0 +1,4 @@
+NODE_ENV = development
+PORT = 4000
+MONGO_URI = mongodb+srv://YOUR_MONGO_URI
+JWT_SECRET = abc123
