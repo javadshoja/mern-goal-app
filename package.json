@@ -4,7 +4,8 @@
 	"description": "Goal setter app for mern tutorial",
 	"main": "server.ts",
 	"scripts": {
-		"start": "ts-node backend/server",
+		"start": "node dist/backend/server",
+		"build": "tsc",
 		"server": "nodemon backend/server",
 		"client": "npm run dev --prefix frontend",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -35,7 +36,6 @@
 	},
 	"dependencies": {
 		"bcrypt": "^5.0.1",
-		"colorts": "^0.1.63",
 		"concurrently": "^7.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.0",
