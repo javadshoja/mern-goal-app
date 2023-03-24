@@ -14,20 +14,15 @@ const Home: NextPage = () => {
 
 	const user = useSelector((state: RootState) => state.user.user)
 	const goals = useSelector((state: RootState) => state.goals.goals)
-	const isError = useSelector((state: RootState) => state.goals.isError)
 	const isLoading = useSelector((state: RootState) => state.goals.isLoading)
-	const message = useSelector((state: RootState) => state.goals.message)
-	useEffect(() => {
-		if (isError) {
-			console.log(message)
-		}
 
+	useEffect(() => {
 		dispatch(getGoals())
 
 		return () => {
 			dispatch(reset())
 		}
-	}, [isError, message, dispatch])
+	}, [dispatch])
 
 	if (isLoading) return <Spinner />
 
