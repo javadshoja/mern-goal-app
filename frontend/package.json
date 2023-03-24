@@ -22,6 +22,7 @@
 	"devDependencies": {
 		"@types/node": "17.0.21",
 		"@types/react": "17.0.39",
+		"@types/react-redux": "^7.1.25",
 		"@types/styled-components": "^5.1.24",
 		"eslint": "8.10.0",
 		"eslint-config-next": "12.1.0",
